@@ -110,27 +110,3 @@ CREATE TABLE advert
 	comments varchar(255),
 	`date` date NOT NULL
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
