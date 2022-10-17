@@ -14,6 +14,10 @@ DROP TABLE IF EXISTS lease;
 DROP TABLE IF EXISTS record;
 DROP TABLE IF EXISTS advert;
 
+DROP TABLE IF EXISTS registration;
+DROP TABLE IF EXISTS tenant_property;
+DROP TABLE IF EXISTS lease_tenant;
+
 -- create tables
 CREATE TABLE branch
 (
@@ -111,3 +115,23 @@ CREATE TABLE advert
 	`date` date NOT NULL
 );
 
+-- create junction tables
+CREATE TABLE registration
+(
+	tenant_id int(6) NOT NULL,
+	branch_id int(4) NOT NULL
+);
+
+CREATE TABLE tenant_property
+(
+	tenant_id int(6) PRIMARY KEY AUTO_INCREMENT,
+	property_id int(6) NOT NULL,
+	comments varchar(255),
+	`date` date NOT NULL
+);
+
+CREATE TABLE lease_tenant
+(
+	lease_id int(6) NOT NULL,
+	tenant_id int(6) NOT NULL
+);
