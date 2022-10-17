@@ -105,8 +105,9 @@ CREATE TABLE record
 
 CREATE TABLE advert
 (
-	advert_id int(6) PRIMARY KEY AUTO_INCREMENT,
+	advert_id int(10) PRIMARY KEY AUTO_INCREMENT,
 	property_id int(6) NOT NULL,
-	comments varchar(255),
+	location varchar(100) NOT NULL,
 	`date` date NOT NULL
 );
+
