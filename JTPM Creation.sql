@@ -2,6 +2,7 @@
 
 
 -- ********** create database **********
+-- DROP DATABASE JTPM
 CREATE DATABASE IF NOT EXISTS JTPM;
 USE JTPM;
 
