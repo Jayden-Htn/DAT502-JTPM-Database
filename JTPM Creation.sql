@@ -1,10 +1,12 @@
 -- JTPM DATABASE CREATION SCRIPT
 
--- create database
+
+-- ********** create database **********
 CREATE DATABASE IF NOT EXISTS JTPM;
 USE JTPM;
 
--- drop tables
+
+-- ********** drop tables **********
 DROP TABLE IF EXISTS branch;
 DROP TABLE IF EXISTS property;
 DROP TABLE IF EXISTS staff;
@@ -18,7 +20,8 @@ DROP TABLE IF EXISTS registration;
 DROP TABLE IF EXISTS tenant_property;
 DROP TABLE IF EXISTS lease_tenant;
 
--- create tables
+
+-- ********** create tables **********
 CREATE TABLE branch
 (
 	branch_id int(4) PRIMARY KEY AUTO_INCREMENT,
@@ -115,7 +118,8 @@ CREATE TABLE advert
 	`date` date NOT NULL
 );
 
--- create junction tables
+
+-- ********** create junction tables **********
 CREATE TABLE registration
 (
 	tenant_id int(6) NOT NULL,
@@ -137,7 +141,7 @@ CREATE TABLE lease_tenant
 );
 
 
--- add foreign keys
+-- ********** add foreign keys **********
 ALTER TABLE property
 ADD CONSTRAINT fk_owner_property
 FOREIGN KEY (owner_id)
