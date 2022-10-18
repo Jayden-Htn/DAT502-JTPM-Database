@@ -79,11 +79,11 @@ CREATE TABLE tenant
 	first_name varchar(30) NOT NULL,
 	last_name varchar(30) NOT NULL,
 	phone varchar(11) NOT NULL,
-	email varchar(50) NOT NULL,
-	address varchar(50) NOT NULL,
-	suburb varchar(30) NOT NULL,
-	city varchar(30) NOT NULL,
-	postcode varchar(4) NOT NULL,
+	email varchar(50),
+	address varchar(50),
+	suburb varchar(30),
+	city varchar(30),
+	postcode varchar(4),
 	UNIQUE (email)
 );
 
