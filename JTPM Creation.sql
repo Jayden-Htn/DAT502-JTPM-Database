@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS branch;
 -- ********** create tables **********
 CREATE TABLE branch
 (
-	branch_id int(4) PRIMARY KEY AUTO_INCREMENT,
+	branch_id int PRIMARY KEY AUTO_INCREMENT,
 	branch_name varchar(50) NOT NULL,
 	phone varchar(9) NOT NULL,
 	email varchar(50) NOT NULL,
@@ -37,10 +37,10 @@ CREATE TABLE branch
 
 CREATE TABLE property
 (
-	property_id int(6) PRIMARY KEY AUTO_INCREMENT,
-	owner_id int(6) NOT NULL,
-	agent_id int(6) NOT NULL,
-	branch_id int(6) NOT NULL,
+	property_id int PRIMARY KEY AUTO_INCREMENT,
+	owner_id int NOT NULL,
+	agent_id int NOT NULL,
+	branch_id int NOT NULL,
 	maintenance varchar(1000) NOT NULL,
 	address varchar(50) NOT NULL,
 	suburb varchar(30) NOT NULL,
@@ -51,21 +51,21 @@ CREATE TABLE property
 
 CREATE TABLE staff
 (
-	staff_id int(4) PRIMARY KEY AUTO_INCREMENT,
+	staff_id int PRIMARY KEY AUTO_INCREMENT,
 	first_name varchar(30) NOT NULL,
 	last_name varchar(30) NOT NULL,
 	phone varchar(11) NOT NULL,
 	email varchar(50) NOT NULL,
 	`position` varchar(20),
-	branch_id varchar(50),
-	manager_id int(4),
+	branch_id int,
+	manager_id int,
 	UNIQUE (phone),
 	UNIQUE (email)
 );
 
 CREATE TABLE owner
 (
-	owner_id int(6) PRIMARY KEY AUTO_INCREMENT,
+	owner_id int PRIMARY KEY AUTO_INCREMENT,
 	first_name varchar(30) NOT NULL,
 	last_name varchar(30) NOT NULL,
 	phone varchar(11) NOT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE owner
 
 CREATE TABLE tenant
 (
-	tenant_id int(6) PRIMARY KEY AUTO_INCREMENT,
+	tenant_id int PRIMARY KEY AUTO_INCREMENT,
 	first_name varchar(30) NOT NULL,
 	last_name varchar(30) NOT NULL,
 	phone varchar(11) NOT NULL,
@@ -89,8 +89,8 @@ CREATE TABLE tenant
 
 CREATE TABLE lease
 (
-	lease_id int(6) PRIMARY KEY AUTO_INCREMENT,
-	property_id int(6) NOT NULL,
+	lease_id int PRIMARY KEY AUTO_INCREMENT,
+	property_id int NOT NULL,
 	rent_amount decimal(8,2) NOT NULL,
 	rent_frequeny varchar(20) NOT NULL,
 	bond_amount decimal(8,2) NOT NULL,
@@ -101,9 +101,9 @@ CREATE TABLE lease
 
 CREATE TABLE record
 (
-	record_id int(6) PRIMARY KEY AUTO_INCREMENT,
-	property_id int(6) NOT NULL,
-	tenant_id int(6) NOT NULL,
+	record_id int PRIMARY KEY AUTO_INCREMENT,
+	property_id int NOT NULL,
+	tenant_id int NOT NULL,
 	start_date date NOT NULL,
 	end_date date NOT NULL,
 	notes varchar(1000)
@@ -111,8 +111,8 @@ CREATE TABLE record
 
 CREATE TABLE advert
 (
-	advert_id int(10) PRIMARY KEY AUTO_INCREMENT,
-	property_id int(6) NOT NULL,
+	advert_id int PRIMARY KEY AUTO_INCREMENT,
+	property_id int NOT NULL,
 	location varchar(100) NOT NULL,
 	`date` date NOT NULL
 );
@@ -121,22 +121,22 @@ CREATE TABLE advert
 -- ********** create junction tables **********
 CREATE TABLE registration
 (
-	tenant_id int(6) NOT NULL,
-	branch_id int(4) NOT NULL
+	tenant_id int NOT NULL,
+	branch_id int NOT NULL
 );
 
 CREATE TABLE `view`
 (
-	tenant_id int(6) PRIMARY KEY AUTO_INCREMENT,
-	property_id int(6) NOT NULL,
+	tenant_id int PRIMARY KEY AUTO_INCREMENT,
+	property_id int NOT NULL,
 	comments varchar(255),
 	`date` date NOT NULL
 );
 
 CREATE TABLE tenancy
 (
-	lease_id int(6) NOT NULL,
-	tenant_id int(6) NOT NULL
+	lease_id int NOT NULL,
+	tenant_id int NOT NULL
 );
 
 
