@@ -7,18 +7,17 @@ USE JTPM;
 
 
 -- ********** drop tables **********
-DROP TABLE IF EXISTS branch;
-DROP TABLE IF EXISTS property;
-DROP TABLE IF EXISTS staff;
-DROP TABLE IF EXISTS owner;
-DROP TABLE IF EXISTS tenant;
-DROP TABLE IF EXISTS lease;
+DROP TABLE IF EXISTS registration;
+DROP TABLE IF EXISTS `view`;
+DROP TABLE IF EXISTS tenancy;
 DROP TABLE IF EXISTS record;
 DROP TABLE IF EXISTS advert;
-
-DROP TABLE IF EXISTS registration;
-DROP TABLE IF EXISTS tenant_property;
-DROP TABLE IF EXISTS lease_tenant;
+DROP TABLE IF EXISTS lease;
+DROP TABLE IF EXISTS tenant;
+DROP TABLE IF EXISTS property;
+DROP TABLE IF EXISTS owner;
+DROP TABLE IF EXISTS staff;
+DROP TABLE IF EXISTS branch;
 
 
 -- ********** create tables **********
@@ -126,7 +125,7 @@ CREATE TABLE registration
 	branch_id int(4) NOT NULL
 );
 
-CREATE TABLE tenant_property
+CREATE TABLE `view`
 (
 	tenant_id int(6) PRIMARY KEY AUTO_INCREMENT,
 	property_id int(6) NOT NULL,
@@ -134,7 +133,7 @@ CREATE TABLE tenant_property
 	`date` date NOT NULL
 );
 
-CREATE TABLE lease_tenant
+CREATE TABLE tenancy
 (
 	lease_id int(6) NOT NULL,
 	tenant_id int(6) NOT NULL
@@ -197,22 +196,22 @@ ADD CONSTRAINT fk__branch_registration
 FOREIGN KEY (branch_id)
 REFERENCES branch(branch_id);
 
-ALTER TABLE tenant_property
-ADD CONSTRAINT fk_tenant_tenant_property
+ALTER TABLE `view`
+ADD CONSTRAINT fk_tenant_view
 FOREIGN KEY (tenant_id)
 REFERENCES tenant(tenant_id);
 
-ALTER TABLE tenant_property
-ADD CONSTRAINT fk_property_tenant_property
+ALTER TABLE `view`
+ADD CONSTRAINT fk_property_view
 FOREIGN KEY (property_id)
 REFERENCES property(property_id);
 
-ALTER TABLE lease_tenant
-ADD CONSTRAINT fk_lease_lease_tenant
+ALTER TABLE tenancy
+ADD CONSTRAINT fk_lease_tenancy
 FOREIGN KEY (lease_id)
 REFERENCES lease(lease_id);
 
-ALTER TABLE lease_tenant
-ADD CONSTRAINT fk_tenant_lease_tenant
+ALTER TABLE tenancy
+ADD CONSTRAINT fk_tenant_tenancy
 FOREIGN KEY (tenant_id)
 REFERENCES tenant(tenant_id);
