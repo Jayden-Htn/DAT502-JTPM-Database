@@ -135,3 +135,80 @@ CREATE TABLE lease_tenant
 	lease_id int(6) NOT NULL,
 	tenant_id int(6) NOT NULL
 );
+
+
+-- add foreign keys
+ALTER TABLE property
+ADD CONSTRAINT fk_owner_property
+FOREIGN KEY (owner_id)
+REFERENCES owner(owner_id);
+
+ALTER TABLE property
+ADD CONSTRAINT fk_agent_property
+FOREIGN KEY (agent_id)
+REFERENCES staff(staff_id);
+
+ALTER TABLE property
+ADD CONSTRAINT fk_branch_property
+FOREIGN KEY (branch_id)
+REFERENCES branch(branch_id);
+
+ALTER TABLE staff
+ADD CONSTRAINT fk_branch_staff
+FOREIGN KEY (branch_id)
+REFERENCES branch(branch_id);
+
+ALTER TABLE staff
+ADD CONSTRAINT fk_manager_staff
+FOREIGN KEY (manager_id)
+REFERENCES staff(staff_id);
+
+ALTER TABLE lease
+ADD CONSTRAINT fk__property_lease
+FOREIGN KEY (property_id)
+REFERENCES property(property_id);
+
+ALTER TABLE record
+ADD CONSTRAINT fk__property_record
+FOREIGN KEY (property_id)
+REFERENCES property(property_id);
+
+ALTER TABLE record
+ADD CONSTRAINT fk__tenant_record
+FOREIGN KEY (tenant_id)
+REFERENCES tenant(tenant_id);
+
+ALTER TABLE advert
+ADD CONSTRAINT fk__property_advert
+FOREIGN KEY (property_id)
+REFERENCES property(property_id);
+
+ALTER TABLE registration
+ADD CONSTRAINT fk__tenant_registration
+FOREIGN KEY (tenant_id)
+REFERENCES tenant(tenant_id);
+
+ALTER TABLE registration
+ADD CONSTRAINT fk__branch_registration
+FOREIGN KEY (branch_id)
+REFERENCES branch(branch_id);
+
+ALTER TABLE tenant_property
+ADD CONSTRAINT fk_tenant_tenant_property
+FOREIGN KEY (tenant_id)
+REFERENCES tenant(tenant_id);
+
+ALTER TABLE tenant_property
+ADD CONSTRAINT fk_property_tenant_property
+FOREIGN KEY (property_id)
+REFERENCES property(property_id);
+
+ALTER TABLE lease_tenant
+ADD CONSTRAINT fk_lease_lease_tenant
+FOREIGN KEY (lease_id)
+REFERENCES lease(lease_id);
+
+ALTER TABLE lease_tenant
+ADD CONSTRAINT fk_tenant_lease_tenant
+FOREIGN KEY (tenant_id)
+REFERENCES tenant(tenant_id);
