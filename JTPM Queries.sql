@@ -111,13 +111,15 @@ WHERE owner_id = 1;
 
 -- custom query
 -- average rent prices
-SELECT (SELECT round(avg(rent_amount), 2) FROM lease WHERE rent_frequency = 'weekly') AS weekly_avg, 
-	(SELECT count(*) FROM lease WHERE rent_frequency = 'weekly') AS num_weekly,
-(SELECT round(avg(rent_amount), 2) FROM lease WHERE rent_frequency = 'fortnightly') AS fortnightly_avg,
-	(SELECT count(*) FROM lease WHERE rent_frequency = 'fortnightly') AS num_fortnightly,
-(SELECT round(avg(rent_amount), 2) FROM lease WHERE rent_frequency = 'monthly') AS monthly_avg,
-	(SELECT count(*) FROM lease WHERE rent_frequency = 'monthly') AS num_monthly,
-(SELECT round(((((weekly_avg*4) + (fortnightly_avg*2) + monthly_avg))/3), 2)) AS overall_avg_per_month
+SELECT concat('$',(SELECT round(avg(rent_amount), 2) FROM lease WHERE rent_frequency = 'weekly'),' across ',
+	(SELECT count(*) FROM lease WHERE rent_frequency = 'weekly'), ' properties') AS weekly_average, 
+concat('$',(SELECT round(avg(rent_amount), 2) FROM lease WHERE rent_frequency = 'fortnightly'),' across ',
+	(SELECT count(*) FROM lease WHERE rent_frequency = 'fortnightly'), ' properties') AS weekly_average,
+concat((SELECT round(avg(rent_amount), 2) FROM lease WHERE rent_frequency = 'monthly'),' across ',
+	(SELECT count(*) FROM lease WHERE rent_frequency = 'monthly'), ' properties') AS monthly_average,
+(SELECT round((((((SELECT round(avg(rent_amount), 2) FROM lease WHERE rent_frequency = 'weekly')*4) + 
+	((SELECT round(avg(rent_amount), 2) FROM lease WHERE rent_frequency = 'fortnightly')*2) + 
+	(SELECT round(avg(rent_amount), 2) FROM lease WHERE rent_frequency = 'monthly')))/3), 2)) AS overall_avg_per_month
 FROM lease
-GROUP BY weekly_avg;
+GROUP BY overall_avg_per_month;
 
