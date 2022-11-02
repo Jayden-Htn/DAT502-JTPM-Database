@@ -102,30 +102,23 @@ CREATE USER developer@localhost
 identified BY 'jtpm123';
 
 
--- ********** grant single user permissions **********
-GRANT SELECT, DELETE, INSERT, UPDATE
-ON JTPM.*
-TO manager@localhost;
-
-GRANT ALL
-ON JTPM.*
-TO backup@localhost;
-
-GRANT ALL
-ON JTPM.*
-TO developer@localhost;
+-- ********** drop roles **********
+DROP USER IF EXISTS standard_user;
+DROP USER IF EXISTS senior_user;
+DROP USER IF EXISTS managing_user;
+DROP USER IF EXISTS dev_user;
 
 
 -- ********** create roles **********
-DROP USER IF EXISTS standard_user;
-DROP USER IF EXISTS lead_user;
-
 CREATE ROLE standard_user;
-CREATE ROLE lead_user;
+CREATE ROLE senior_user;
+CREATE ROLE managing_user;
+CREATE ROLE dev_user;
 
 -- SELECT * FROM mysql.user;
 
 
+-- ********** grant privileges **********
 -- standard_user
 GRANT SELECT, DELETE, INSERT, UPDATE
 ON JTPM.clients TO standard_user;
@@ -142,41 +135,54 @@ ON JTPM.leases TO standard_user;
 GRANT SELECT, DELETE, INSERT, UPDATE
 ON JTPM.viewings TO standard_user;
 
-
 -- lead_user
 GRANT SELECT, DELETE, INSERT, UPDATE
-ON JTPM.clients TO lead_user;
+ON JTPM.clients TO senior_user;
 
 GRANT SELECT, DELETE, INSERT, UPDATE
-ON JTPM.owner TO lead_user;
+ON JTPM.owner TO senior_user;
 
 GRANT SELECT, DELETE, INSERT, UPDATE
-ON JTPM.property TO lead_user;
+ON JTPM.property TO senior_user;
 
 GRANT SELECT, DELETE, INSERT, UPDATE
-ON JTPM.leases TO lead_user;
+ON JTPM.leases TO senior_user;
 
 GRANT SELECT, DELETE, INSERT, UPDATE
-ON JTPM.record TO lead_user;
+ON JTPM.record TO senior_user;
 
 GRANT SELECT, DELETE, INSERT, UPDATE
-ON JTPM.advert TO lead_user;
+ON JTPM.advert TO senior_user;
 
 GRANT SELECT, DELETE, INSERT, UPDATE
-ON JTPM.viewings TO lead_user;
+ON JTPM.viewings TO senior_user;
+
+-- managing_user
+GRANT SELECT, DELETE, INSERT, UPDATE
+ON JTPM.* TO managing_user;
+
+-- dev_user
+GRANT ALL
+ON JTPM.* TO dev_user;
 
 
--- grant roles
+-- ********** grant roles **********
 GRANT standard_user TO agent@localhost;
-GRANT lead_user TO branch_manager@localhost;
-GRANT lead_user TO secretary@localhost;
+GRANT senior_user TO branch_manager@localhost, secretary@localhost;
+GRANT managing_user TO manager@localhost;
+GRANT dev_user TO developer@localhost, backup@localhost;
 
 
--- set default roles
+-- ********** set default roles **********
 SET DEFAULT ROLE standard_user 
 TO agent@localhost;
 
-SET DEFAULT ROLE lead_user 
-TO branch_manager@localhost, 
-secretary@localhost;
+SET DEFAULT ROLE senior_user 
+TO branch_manager@localhost, secretary@localhost;
+
+SET DEFAULT ROLE managing_user 
+TO manager@localhost;
+
+SET DEFAULT ROLE dev_user 
+TO developer@localhost, backup@localhost;
 
